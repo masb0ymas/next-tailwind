@@ -1,6 +1,7 @@
 import dummyData from '@src/data/dummy/picture.json'
 import '@testing-library/jest-dom'
 import { cleanup, render } from '@testing-library/react'
+import renderer from 'react-test-renderer'
 import AvatarGroup from '../AvatarGroup'
 
 afterEach(cleanup)
@@ -40,5 +41,14 @@ describe('Test Avatar Group', () => {
     const avatarRemaining = getByTestId('remaining-avatar').textContent
 
     expect(expectResult).toEqual(avatarRemaining)
+  })
+
+  test('snapshot component', () => {
+    const newData = dummyData.data
+
+    const renderComponent = renderer.create(<AvatarGroup data={newData} />)
+    const componentSnapshot = renderComponent.toJSON()
+
+    expect(componentSnapshot).toMatchSnapshot()
   })
 })
